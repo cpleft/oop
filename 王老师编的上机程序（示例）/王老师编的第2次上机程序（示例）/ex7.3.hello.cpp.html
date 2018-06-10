@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>Hello to every one</title>
+</head>
+<body bgcolor="white">
+<pre><tt><font color="#000000">01:</font> <i><font color="#9A1900">/**</font></i>
+<font color="#000000">02:</font> <i><font color="#9A1900"> * 习题 7.10.3 的实现示例:</font></i>
+<font color="#000000">03:</font> <i><font color="#9A1900"> *  对于来自命令行参数中的每个名字，均显示 "Hello xxx!"</font></i>
+<font color="#000000">04:</font> <i><font color="#9A1900"> */</font></i>
+<font color="#000000">05:</font> 
+<font color="#000000">06:</font> <b><font color="#000080">#include</font></b> <font color="#FF0000">&lt;iostream&gt;</font>
+<font color="#000000">07:</font> 
+<font color="#000000">08:</font> <b><font color="#0000FF">using</font></b> <b><font color="#0000FF">namespace</font></b> std<font color="#990000">;</font>
+<font color="#000000">09:</font> 
+<font color="#000000">10:</font> <i><font color="#9A1900">/**</font></i>
+<font color="#000000">11:</font> <i><font color="#9A1900"> * </font></i><font color="#009900">@brief</font><i><font color="#9A1900"> 主程序</font></i>
+<font color="#000000">12:</font> <i><font color="#9A1900"> * </font></i><font color="#009900">@param</font><i><font color="#9A1900"> argc  命令行参数的个数，最小值为1</font></i>
+<font color="#000000">13:</font> <i><font color="#9A1900"> * </font></i><font color="#009900">@param</font><i><font color="#9A1900"> argv  命令行参数列表，是一个指针数组，元素个数为 argc</font></i>
+<font color="#000000">14:</font> <i><font color="#9A1900"> *      其中 argv[0] 为可执行程序(*.exe)的路径.</font></i>
+<font color="#000000">15:</font> <i><font color="#9A1900"> * </font></i><font color="#009900">@return</font><i><font color="#9A1900"> 若在命令行参数中未指定任何名字则返回1，否则返回0.</font></i>
+<font color="#000000">16:</font> <i><font color="#9A1900"> */</font></i>
+<font color="#000000">17:</font> <font color="#009900">int</font> <b><font color="#000000"><a name="17">main</a></font></b><font color="#990000">(</font><font color="#009900">int</font> argc<font color="#990000">,</font> <font color="#009900">char</font><font color="#990000">*</font> argv<font color="#990000">[])</font>
+<font color="#000000">18:</font> <font color="#FF0000">{</font>
+<font color="#000000">19:</font>     <b><font color="#0000FF">if</font></b><font color="#990000">(</font>argc <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">)</font>
+<font color="#000000">20:</font>     <font color="#FF0000">{</font>
+<font color="#000000">21:</font>         cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"Usage:</font><font color="#CC33CC">\n</font><font color="#FF0000">    "</font> <font color="#990000">&lt;&lt;</font> argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">&lt;&lt;</font> <font color="#FF0000">" name1 [name2 ...]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+<font color="#000000">22:</font>         <b><font color="#0000FF">return</font></b> <font color="#993399">1</font><font color="#990000">;</font>
+<font color="#000000">23:</font>     <font color="#FF0000">}</font>
+<font color="#000000">24:</font> 
+<font color="#000000">25:</font>     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#009900">int</font> i<font color="#990000">=</font><font color="#993399">1</font><font color="#990000">;</font> i<font color="#990000">&lt;</font>argc<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+<font color="#000000">26:</font>         cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"Hello "</font> <font color="#990000">&lt;&lt;</font> argv<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"!"</font> <font color="#990000">&lt;&lt;</font> endl<font color="#990000">;</font>
+<font color="#000000">27:</font>     <b><font color="#0000FF">return</font></b> <font color="#993399">0</font><font color="#990000">;</font>
+<font color="#000000">28:</font> <font color="#FF0000">}</font>
+<font color="#000000">29:</font> </tt></pre>
+</body>
+</html>

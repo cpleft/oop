@@ -1,0 +1,26 @@
+BODY { background: white; color: black }
+CODE { background: #E0E0E0 }
+TH CODE { background: #E0E0FF }
+TH { background: #E0E0FF }
+TD { background: #F0F0F0 }
+TD.figure { background: white; text-align: center; border-width: thin;
+  border-style: dotted }
+PRE { margin-top: 0px; margin-bottom: 0px; font-family: monospace }
+.example { background: #E0E0FF; border-style: dotted; border-width: thin;
+  padding: 0.3em }
+.inline { float: right; clear: both; padding: 2pt }
+.clear { clear: both }
+H1.title { text-align: center }
+H1, H2, H3, H4 { clear: both; background-color: #FFFFC0; }
+HR { clear: both; }
+A.answer { font-size: smaller }
+P { text-align: justify }
+* { font-family: Verdana, sans-serif }
+DIV.eq { margin: 1.12em 0; margin-left: 3ex; margin-right: 3ex }
+DIV.example > P:first-child { margin: 0em 0 }
+DIV.example > P { margin: 0em; margin-top: 1.12em }
+TABLE { background: white; margin-left: auto; margin-right: auto; }
+DD { border-left-style: solid; border-left-color: blue; padding-left: 1ex }
+DT { font-style: italic; background-color: #f0f0ff }
+LI { margin-top: 0.5em; margin-bottom: 0.5em }
+SPAN.tabletitle { font-weight: bold; }

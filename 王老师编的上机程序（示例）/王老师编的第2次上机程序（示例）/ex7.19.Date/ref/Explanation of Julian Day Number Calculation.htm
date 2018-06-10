@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0080)http://www.cs.utsa.edu/~cs1063/projects/Spring2011/Project1/jdn-explanation.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Explanation of Julian Day Number Calculation</title>
+  </head>
+
+  <body>
+    <h1>Explanation of Julian Day Number Calculation</h1>
+
+<p>
+This web page provides a brief explanation for 
+how the Julian Day Number (JDN) is calculated in Project 1.&nbsp;
+</p>
+
+<ul>
+
+<li>
+The expression for <b>a</b>:
+
+<blockquote>
+<table cellpadding="0" cellspacing="0">
+<tbody><tr><td>&nbsp;</td>     <td>14 – month</td></tr>
+<tr><td>a =&nbsp;</td>  <td><hr></td></tr>
+<tr><td>&nbsp;</td>     <td align="center">12</td></tr>
+</tbody></table>
+</blockquote>
+
+will result in a 1 for January (month 1) and February (month 2).&nbsp;
+The result is 0 for the other 10 months.
+</li>
+
+<br>
+
+<li>
+The expression for <b>y</b>:
+
+<blockquote>
+y = year + 4800 – a
+</blockquote>
+
+adds 4800 to the <b>year</b> so that we will start counting years from
+the <b>year</b>  –4800.&nbsp; [As a side note, <b>year</b> 1
+corresponds to 1 CE, <b>year</b> 0 corresponds to 1 BCE, <b>year</b>
+–1 corresponds to 2 BCE, and so on.&nbsp; There is no year between
+1 CE and 1 BCE.]
+
+<br><br>
+
+The <b>– a</b> part of the expression subtracts one if the month is
+January or February and goes along with the next part of the
+calculation.
+</li>
+
+<br>
+
+<li>
+The expression for <b>m</b>:
+
+<blockquote>
+m = month + 12a – 3
+</blockquote>
+
+results in a 10 for January, 11 for February, 0 for March, 1 for
+April, ..., and a 9 for December.&nbsp; This is because <b>a</b> is 1
+for January and February and 0 for the other months.&nbsp; The effect
+of the combined calculation of <b>y</b> and <b>m</b> is to pretend
+that the year begins in March and ends in February.
+</li>
+
+<br>
+
+<li>
+The expression for <b>JDN</b>:
+
+<blockquote>
+<table cellpadding="0" cellspacing="0">
+<tbody><tr>
+<td>&nbsp;</td>
+    <td>153m + 2</td>
+        <td>&nbsp;</td>
+            <td align="center">y</td>
+                <td>&nbsp;</td>
+                    <td align="center">&nbsp;y&nbsp;</td>
+                        <td>&nbsp;</td>
+                            <td align="center">y</td>
+                                <td>&nbsp;</td>
+</tr>
+<tr>
+<td>JDN = day + &nbsp;</td>
+    <td><hr></td>
+        <td>&nbsp; + 365y + &nbsp;</td>
+            <td><hr></td>
+                <td>&nbsp; – &nbsp;</td>
+                    <td><hr></td>
+                        <td>&nbsp; + &nbsp;</td>
+                            <td><hr></td>
+                                <td>&nbsp; – 32045</td>
+</tr>
+<tr>
+<td>&nbsp;</td>      
+    <td align="center">5</td>
+        <td>&nbsp;</td>
+            <td align="center">&nbsp;4&nbsp;</td>
+                <td>&nbsp;</td>
+                    <td align="center">100</td>
+                        <td>&nbsp;</td>
+                            <td align="center">400</td>
+                                <td>&nbsp;</td>
+</tr>
+</tbody></table>
+</blockquote>
+
+has several parts to it.&nbsp; Remember that we are calculating the
+number of days since a fixed day in the past, and there are several things
+to take into account.
+
+<br><br>
+
+<ul>
+<li>
+Adding <b>day</b> (the day of the month) should be easy to figure out.&nbsp;
+Each increment to <b>day</b> increments the number of days since a
+fixed day.
+</li>
+
+<br>
+
+
+<li>
+The integer division <b>(153m + 2)/5</b> is a cleverly designed
+expression to calculate the number of days in the previous months
+(where March corresponds to <b>m</b>=0).&nbsp; So for example, June
+corresponds to a value of 3 for <b>m</b>.&nbsp; For this value of
+<b>m</b>, the expression results in a value of <b>461/5 = 92</b> using
+integer division, which are the total number of days in March, April,
+and May.
+</li>
+
+<br>
+
+<li>
+The expression <b>365y</b> should be easy to figure out, i.e., each 
+non-leap-year has 365 days.
+</li>
+
+<br>
+
+<li>
+The expression <b>y/4 - y/100 + y/400</b> (all integer divisions)
+calculates the number of leap years since the <b>year</b> 
+–4800 (which corresponds to a value of 0 for <b>y</b>).&nbsp;
+Recall that there is a leap year every year that is divisible by 4,
+except for years that are divisible by 100, but not divisible by
+400.&nbsp; The number of leap years is, of course, the same as the
+number of leap days that need to be added in.
+</li>
+
+<br>
+
+<li>
+The last part <b>– 32045</b> ensures that the result will be
+0 for January 1, 4713 BCE.
+</li>
+</ul>
+</li></ul>
+
+
+<hr width="100%">
+<script type="text/javascript">
+  <!--
+    var lastUpdate = new Date(document.lastModified);
+    document.write("Revision Date " + lastUpdate.toString());
+   -->
+</script>Revision Date Fri Jan 21 2011 03:04:08 GMT+0800 (中国标准时间)
+
+  
+
+<audio controls="controls" style="display: none;"></audio></body><style type="text/css">#yddContainer{display:block;font-family:Microsoft YaHei;position:relative;width:100%;height:100%;top:-4px;left:-4px;font-size:12px;border:1px solid}#yddTop{display:block;height:22px}#yddTopBorderlr{display:block;position:static;height:17px;padding:2px 28px;line-height:17px;font-size:12px;color:#5079bb;font-weight:bold;border-style:none solid;border-width:1px}#yddTopBorderlr .ydd-sp{position:absolute;top:2px;height:0;overflow:hidden}.ydd-icon{left:5px;width:17px;padding:0px 0px 0px 0px;padding-top:17px;background-position:-16px -44px}.ydd-close{right:5px;width:16px;padding-top:16px;background-position:left -44px}#yddKeyTitle{float:left;text-decoration:none}#yddMiddle{display:block;margin-bottom:10px}.ydd-tabs{display:block;margin:5px 0;padding:0 5px;height:18px;border-bottom:1px solid}.ydd-tab{display:block;float:left;height:18px;margin:0 5px -1px 0;padding:0 4px;line-height:18px;border:1px solid;border-bottom:none}.ydd-trans-container{display:block;line-height:160%}.ydd-trans-container a{text-decoration:none;}#yddBottom{position:absolute;bottom:0;left:0;width:100%;height:22px;line-height:22px;overflow:hidden;background-position:left -22px}.ydd-padding010{padding:0 10px}#yddWrapper{color:#252525;z-index:10001;background:url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ab20.png);}#yddContainer{background:#fff;border-color:#4b7598}#yddTopBorderlr{border-color:#f0f8fc}#yddWrapper .ydd-sp{background-image:url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ydd-sprite.png)}#yddWrapper a,#yddWrapper a:hover,#yddWrapper a:visited{color:#50799b}#yddWrapper .ydd-tabs{color:#959595}.ydd-tabs,.ydd-tab{background:#fff;border-color:#d5e7f3}#yddBottom{color:#363636}#yddWrapper{min-width:250px;max-width:400px;}</style></html>

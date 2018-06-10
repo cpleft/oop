@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>ex7.11.error.cpp</title>
+</head>
+<body bgcolor="white">
+<pre><tt><font color="#000000">001:</font> <i><font color="#9A1900">/**</font></i>
+<font color="#000000">002:</font> <i><font color="#9A1900"> * 习题 7.10.11 实现示例</font></i>
+<font color="#000000">003:</font> <i><font color="#9A1900"> *  Write an error function that takes a printf-style format string</font></i>
+<font color="#000000">004:</font> <i><font color="#9A1900"> *  containing %s, %c, and %d directives and an arbitrary number of</font></i>
+<font color="#000000">005:</font> <i><font color="#9A1900"> *  arguments. Don’t use printf().</font></i>
+<font color="#000000">006:</font> <i><font color="#9A1900"> *</font></i>
+<font color="#000000">007:</font> <i><font color="#9A1900"> * 编 制 人：王献青 </font></i><font color="#009900">@XiDian</font><i><font color="#9A1900"> University</font></i>
+<font color="#000000">008:</font> <i><font color="#9A1900"> * 编制时间： 2016.5</font></i>
+<font color="#000000">009:</font> <i><font color="#9A1900"> */</font></i>
+<font color="#000000">010:</font> 
+<font color="#000000">011:</font> <b><font color="#000080">#include</font></b> <font color="#FF0000">&lt;iostream&gt;</font>
+<font color="#000000">012:</font> <b><font color="#000080">#include</font></b> <font color="#FF0000">&lt;cstdarg&gt;</font>
+<font color="#000000">013:</font> <b><font color="#000080">#include</font></b> <font color="#FF0000">&lt;cstdio&gt;</font>  <i><font color="#9A1900">// for printf()</font></i>
+<font color="#000000">014:</font> 
+<font color="#000000">015:</font> <b><font color="#0000FF">using</font></b> <b><font color="#0000FF">namespace</font></b> std<font color="#990000">;</font>
+<font color="#000000">016:</font> 
+<font color="#000000">017:</font> <i><font color="#9A1900">/* 题目要求实现的函数 error()，其格式串中应支持的描述字包括:</font></i>
+<font color="#000000">018:</font> <i><font color="#9A1900"> *   %s  - the type of argument is character string, char* or char[]</font></i>
+<font color="#000000">019:</font> <i><font color="#9A1900"> *   %d  - the type of argument is int</font></i>
+<font color="#000000">020:</font> <i><font color="#9A1900"> *   %c  - the type of argument is char</font></i>
+<font color="#000000">021:</font> <i><font color="#9A1900"> */</font></i>
+<font color="#000000">022:</font> <font color="#009900">void</font> <b><font color="#000000"><a name="22">error</a></font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> <font color="#009900">char</font> <font color="#990000">*</font> fmt<font color="#990000">,</font> <font color="#990000">...)</font>
+<font color="#000000">023:</font> <font color="#FF0000">{</font>
+<font color="#000000">024:</font>     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> NULL <font color="#990000">==</font> fmt <font color="#990000">)</font> <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+<font color="#000000">025:</font> <i><font color="#9A1900">//</font></i>
+<font color="#000000">026:</font> <i><font color="#9A1900">// Firstly: declarate a variable that type is va_list and prepare it.</font></i>
+<font color="#000000">027:</font> <i><font color="#9A1900">//</font></i>
+<font color="#000000">028:</font>     <font color="#008080">va_list</font> ap<font color="#990000">;</font>
+<font color="#000000">029:</font>     <b><font color="#000000">va_start</font></b><font color="#990000">(</font>ap<font color="#990000">,</font> fmt<font color="#990000">);</font>
+<font color="#000000">030:</font> 
+<font color="#000000">031:</font> <i><font color="#9A1900">//</font></i>
+<font color="#000000">032:</font> <i><font color="#9A1900">// Secondly: body part,</font></i>
+<font color="#000000">033:</font> <i><font color="#9A1900">//     get each argument by va_arg with the corresponding type.</font></i>
+<font color="#000000">034:</font> <i><font color="#9A1900">//</font></i>
+<font color="#000000">035:</font>     <i><font color="#9A1900">/* fmt中除了包含格式描述串之外，还有其他字符.</font></i>
+<font color="#000000">036:</font> <i><font color="#9A1900">     * case 1: 若为指定的格式描述，则取对应的参数;</font></i>
+<font color="#000000">037:</font> <i><font color="#9A1900">     * case 2: 若不是格式描述，则原样输出.</font></i>
+<font color="#000000">038:</font> <i><font color="#9A1900">     */</font></i>
+<font color="#000000">039:</font>     <b><font color="#0000FF">for</font></b><font color="#990000">(</font> <font color="#990000">;</font>  <font color="#990000">*</font>fmt <font color="#990000">;</font> <font color="#990000">++</font>fmt <font color="#990000">)</font>
+<font color="#000000">040:</font>     <font color="#FF0000">{</font>
+<font color="#000000">041:</font>         <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">*</font>fmt <font color="#990000">!=</font> <font color="#FF0000">'%'</font> <font color="#990000">)</font> <i><font color="#9A1900">// not format prefix-char '%', output it</font></i>
+<font color="#000000">042:</font>         <font color="#FF0000">{</font>
+<font color="#000000">043:</font>             cerr <font color="#990000">&lt;&lt;</font> <font color="#990000">*</font>fmt <font color="#990000">;</font>
+<font color="#000000">044:</font>         <font color="#FF0000">}</font>
+<font color="#000000">045:</font>         <b><font color="#0000FF">else</font></b>  <i><font color="#9A1900">// next char may be a format char</font></i>
+<font color="#000000">046:</font>         <font color="#FF0000">{</font>
+<font color="#000000">047:</font>             <font color="#990000">++</font>fmt<font color="#990000">;</font> <i><font color="#9A1900">// jump '%'</font></i>
+<font color="#000000">048:</font>             <b><font color="#0000FF">switch</font></b><font color="#990000">(</font> <font color="#990000">*</font>fmt <font color="#990000">)</font>
+<font color="#000000">049:</font>             <font color="#FF0000">{</font>
+<font color="#000000">050:</font>             <b><font color="#0000FF">case</font></b> <font color="#FF0000">'s'</font><font color="#990000">:</font> <i><font color="#9A1900">// %s, the corresponding argument is a C-style string</font></i>
+<font color="#000000">051:</font>                 <font color="#FF0000">{</font>
+<font color="#000000">052:</font>                     <b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*</font> str <font color="#990000">=</font> <b><font color="#000000">va_arg</font></b><font color="#990000">(</font>ap<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*);</font>
+<font color="#000000">053:</font>                     cerr <font color="#990000">&lt;&lt;</font> str <font color="#990000">;</font>
+<font color="#000000">054:</font>                 <font color="#FF0000">}</font>
+<font color="#000000">055:</font>                 <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+<font color="#000000">056:</font>             <b><font color="#0000FF">case</font></b> <font color="#FF0000">'d'</font><font color="#990000">:</font> <i><font color="#9A1900">// %d, the corresponding argument is a int</font></i>
+<font color="#000000">057:</font>                 <font color="#FF0000">{</font>
+<font color="#000000">058:</font>                     <font color="#009900">int</font> aint <font color="#990000">=</font> <b><font color="#000000">va_arg</font></b><font color="#990000">(</font>ap<font color="#990000">,</font> <font color="#009900">int</font><font color="#990000">);</font>
+<font color="#000000">059:</font>                     cerr <font color="#990000">&lt;&lt;</font> aint<font color="#990000">;</font>
+<font color="#000000">060:</font>                 <font color="#FF0000">}</font>
+<font color="#000000">061:</font>                 <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+<font color="#000000">062:</font>             <b><font color="#0000FF">case</font></b> <font color="#FF0000">'c'</font><font color="#990000">:</font> <i><font color="#9A1900">// %c, the corresponding argument is a char.</font></i>
+<font color="#000000">063:</font>                 <font color="#FF0000">{</font>
+<font color="#000000">064:</font>                     <i><font color="#9A1900">/* !!! the corresponding argument is a 'int' which was</font></i>
+<font color="#000000">065:</font> <i><font color="#9A1900">                     *     converted by C/C++ system from char</font></i>
+<font color="#000000">066:</font> <i><font color="#9A1900">                     */</font></i>
+<font color="#000000">067:</font>                     <font color="#009900">int</font> c <font color="#990000">=</font> <b><font color="#000000">va_arg</font></b><font color="#990000">(</font>ap<font color="#990000">,</font> <font color="#009900">int</font><font color="#990000">);</font>
+<font color="#000000">068:</font>                     cerr <font color="#990000">&lt;&lt;</font> <font color="#009900">char</font><font color="#990000">(</font>c<font color="#990000">);</font>
+<font color="#000000">069:</font>                 <font color="#FF0000">}</font>
+<font color="#000000">070:</font>                 <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+<font color="#000000">071:</font>             <b><font color="#0000FF">case</font></b> <font color="#FF0000">'%'</font><font color="#990000">:</font> <i><font color="#9A1900">// %%, output one '%' like *printf()</font></i>
+<font color="#000000">072:</font>                 cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">'%'</font><font color="#990000">;</font>
+<font color="#000000">073:</font>                 <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+<font color="#000000">074:</font>             <b><font color="#0000FF">default</font></b><font color="#990000">:</font> <i><font color="#9A1900">// not a format char,</font></i>
+<font color="#000000">075:</font>                 <i><font color="#9A1900">// output the char ONLY after '%' like *printf()</font></i>
+<font color="#000000">076:</font>                 cerr <font color="#990000">&lt;&lt;</font> <font color="#990000">*(</font>fmt<font color="#990000">);</font>
+<font color="#000000">077:</font>                 <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+<font color="#000000">078:</font>             <font color="#FF0000">}</font>
+<font color="#000000">079:</font>         <font color="#FF0000">}</font>
+<font color="#000000">080:</font>     <font color="#FF0000">}</font> <i><font color="#9A1900">// end of while</font></i>
+<font color="#000000">081:</font> 
+<font color="#000000">082:</font> <i><font color="#9A1900">//</font></i>
+<font color="#000000">083:</font> <i><font color="#9A1900">// Finally: clear works, release some resource</font></i>
+<font color="#000000">084:</font> <i><font color="#9A1900">//</font></i>
+<font color="#000000">085:</font>     <b><font color="#000000">va_end</font></b><font color="#990000">(</font>ap<font color="#990000">);</font>
+<font color="#000000">086:</font> <font color="#FF0000">}</font>
+<font color="#000000">087:</font> 
+<font color="#000000">088:</font> 
+<font color="#000000">089:</font> <i><font color="#9A1900">// 定义这个宏的目的是对比 error() 和 printf() 的计算结果，</font></i>
+<font color="#000000">090:</font> <i><font color="#9A1900">// 并便于引用!</font></i>
+<font color="#000000">091:</font> <b><font color="#000080">#define</font></b> <b><font color="#000000"><a name="91">compare_output</a></font></b><font color="#990000">(</font>fmt<font color="#990000">,</font> <font color="#990000">...)</font> <font color="#990000">\</font>
+<font color="#000000">092:</font>     <b><font color="#000000"><a href="ex7.11.error.cpp.html#22">error</a></font></b> <font color="#990000">(</font> <font color="#FF0000">"error ():"</font> fmt<font color="#990000">,</font> ##__VA_ARGS__<font color="#990000">);\</font>
+<font color="#000000">093:</font>     <b><font color="#000000">printf</font></b><font color="#990000">(</font> <font color="#FF0000">"printf():"</font> fmt<font color="#990000">,</font> ##__VA_ARGS__<font color="#990000">);</font> <font color="#990000">\</font>
+<font color="#000000">094:</font>     cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"-------------------------------------------------------------</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+<font color="#000000">095:</font> 
+<font color="#000000">096:</font> <font color="#009900">int</font> <b><font color="#000000"><a name="96">main</a></font></b><font color="#990000">(</font><font color="#009900">int</font> argc<font color="#990000">,</font> <font color="#009900">char</font><font color="#990000">*</font> argv<font color="#990000">[])</font>
+<font color="#000000">097:</font> <font color="#FF0000">{</font>
+<font color="#000000">098:</font>     <i><font color="#9A1900">// 简单的单项测试</font></i>
+<font color="#000000">099:</font>     <b><font color="#000000"><a href="ex7.11.error.cpp.html#91">compare_output</a></font></b><font color="#990000">(</font><font color="#FF0000">"test string [%s]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">,</font> <font color="#FF0000">"Who am i"</font><font color="#990000">);</font>
+<font color="#000000">100:</font>     <b><font color="#000000"><a href="ex7.11.error.cpp.html#91">compare_output</a></font></b><font color="#990000">(</font><font color="#FF0000">"test int: [%d]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">,</font> <font color="#993399">20160531</font><font color="#990000">);</font>
+<font color="#000000">101:</font>     <b><font color="#000000"><a href="ex7.11.error.cpp.html#91">compare_output</a></font></b><font color="#990000">(</font><font color="#FF0000">"the char: [%c]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">,</font> <font color="#FF0000">'x'</font><font color="#990000">);</font>
+<font color="#000000">102:</font> 
+<font color="#000000">103:</font>     <i><font color="#9A1900">// 混合测试</font></i>
+<font color="#000000">104:</font>     <b><font color="#000000"><a href="ex7.11.error.cpp.html#91">compare_output</a></font></b><font color="#990000">(</font><font color="#FF0000">"Hello, %s is %c %s man. %d.</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">,</font>
+<font color="#000000">105:</font>                    <font color="#FF0000">"Confucious"</font><font color="#990000">,</font> <font color="#FF0000">'a'</font><font color="#990000">,</font> <font color="#FF0000">"super"</font><font color="#990000">,</font> <font color="#993399">2016</font><font color="#990000">);</font>
+<font color="#000000">106:</font>     <b><font color="#000000"><a href="ex7.11.error.cpp.html#91">compare_output</a></font></b><font color="#990000">(</font> <i><font color="#9A1900">/* format string that spans multiple lines */</font></i>
+<font color="#000000">107:</font>           <font color="#FF0000">"Exe Path is [%s]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+<font color="#000000">108:</font>           <font color="#FF0000">"This program was built at {%s %s}.</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+<font color="#000000">109:</font>           <font color="#FF0000">"command line arguments# :[%d]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+<font color="#000000">110:</font>           <font color="#FF0000">"char '%c' just is decimal number [%d]</font><font color="#CC33CC">\n\n</font><font color="#FF0000">"</font><font color="#990000">,</font>
+<font color="#000000">111:</font>           argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> __DATE__<font color="#990000">,</font> __TIME__<font color="#990000">,</font> argc<font color="#990000">,</font>
+<font color="#000000">112:</font>           <i><font color="#9A1900">// 下面两个字符实参被隐式转换: char --&gt; int(0x41).</font></i>
+<font color="#000000">113:</font>           <font color="#FF0000">'A'</font><font color="#990000">,</font><font color="#FF0000">'A'</font>
+<font color="#000000">114:</font>         <font color="#990000">);</font>
+<font color="#000000">115:</font> 
+<font color="#000000">116:</font>     <i><font color="#9A1900">// '%' 之后不是格式描述字的测试</font></i>
+<font color="#000000">117:</font>     <b><font color="#000000"><a href="ex7.11.error.cpp.html#91">compare_output</a></font></b><font color="#990000">(</font><font color="#FF0000">"%%m is unknown format spec, so '%%m' is %m.</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">);</font>
+<font color="#000000">118:</font>     <b><font color="#000000"><a href="ex7.11.error.cpp.html#91">compare_output</a></font></b><font color="#990000">(</font><font color="#FF0000">"That's %%all%%!</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">);</font>
+<font color="#000000">119:</font> 
+<font color="#000000">120:</font>     <b><font color="#0000FF">return</font></b> <font color="#993399">0</font><font color="#990000">;</font>
+<font color="#000000">121:</font> <font color="#FF0000">}</font>
+<font color="#000000">122:</font> </tt></pre>
+</body>
+</html>
