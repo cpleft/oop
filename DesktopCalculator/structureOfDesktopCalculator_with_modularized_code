@@ -1,0 +1,101 @@
+/***********************************************************************************
+requests:
+
+结合第8、9章、习题 8.5.3 的要求，将第6章的桌面计算器按照以下要求改造实现：
+1.采用多个头文件、多个源文件的方式实现完整程序，使得其物理结构和逻辑结构保持一致；
+2.输入中每遇到一个分号或回车(‘\n’)就认为一个完整表达式结束，并将该完整表达式记作一行。
+  在处理过程中累计行数；
+3.对于输入中存在错误时，除了提示错误现象外，还需提示相应的出错行号。
+4.必须支持命令行参数，用以指明从何处读取数据。命令行参数中的第2项开始为输入文件之路径，
+  可省略。
+-输入文件就是普通的文本文件，其中预先输入了若干表达式，内容和来自标准输入的完全相同。
+-若命令行参数未指明输入文件，则程序从标准输入设备(cin)读取表达式；
+-若命令行指明了1~N个输入文件，则程序依次从这些文件读入表达式。
+
+************************************************************************************/
+
+There should be 5 modules:
+  main controler
+  lexer
+  parser
+  error handler
+  symbol table
+
+* for main controler:
+  - paser Cmdl;
+  - read user input by each expressment.
+
+* for lexer:
+  - interface 
+    // for user interface (in hpp file)
+    namespace Lexer 
+    {
+      // part I :for lexical analysis
+      // variables 
+      enum Token_value {...};
+      extern double number_value;
+      extern std::string string_value;
+      extern Token_value cur_token;
+      // functions
+      Token_value get_token();
+
+      // part II :for commandline and files input & switch
+      // functions
+      int parseCmdl(int argc, char* argv);
+      void skip();  // when an error found, skip the expr.
+      std::string exprID(); // get current expr's info.
+      void exprIncrese();  // increase exprCounter.
+      // variables
+      extern std::string curTokenText; // for error handler.
+    }
+  - assistant namespace (in cpp file and is unnamed)
+    namespace 
+    {
+      // variables
+      std::istream* finput = NULL; // defination of input file stream
+      std::vector<std::string> fileNames;
+      int exprCounter = 0;
+
+      // functions
+      int switchInput();
+      int openInputFile();
+    }
+  - implementation of interface 
+
+* for parser:
+  - user interface
+    namespace Paser 
+    {
+      double expr(bool );
+    }
+  - developer interface
+    namespace Paser 
+    {
+      // variables
+      
+      // functions
+      double expr(bool);  // for + -
+      double prim(bool);  // for * /
+      double term(bool);  
+    }
+
+* for error handler:
+  - interface
+    namespace Error 
+    {
+      // variables
+      extern int no_of_errors;
+
+      // functions
+      void error(const char* );
+      void error(const std::string );
+      void error(char );  // invalid Token_value
+    }
+
+* for symbol controler:
+  - interface (int hpp file)
+    namespace Symbol
+    {
+      extern std::map<string, double> table;
+    }
+  - implementation
